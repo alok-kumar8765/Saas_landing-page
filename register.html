@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Register</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="brand">SaaS<span>Lab</span></div>
+    <div class="controls">
+      <div class="lang-wrap">
+        <button class="lang-btn"><span>🌐</span> <span class="lang-label">English</span> ▾</button>
+        <div class="lang-select">
+          <div class="lang-item" data-lang="en">English</div>
+          <div class="lang-item" data-lang="hi">हिन्दी</div>
+          <div class="lang-item" data-lang="es">Español</div>
+        </div>
+      </div>
+      <button class="theme-toggle">Theme</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="form-card" role="main">
+      <h2 data-i18n="register">Register</h2>
+      <form id="regForm" novalidate>
+        <div class="form-row">
+          <label for="rname">Full name</label>
+          <input id="rname" name="name" class="input" required />
+        </div>
+
+        <div class="form-row">
+          <label for="remail" data-i18n="email">Email</label>
+          <input id="remail" name="email" class="input" type="email" required />
+          <div id="remailErr" class="error" style="display:none"></div>
+        </div>
+
+        <div class="form-row">
+          <label for="rpassword" data-i18n="password">Password</label>
+          <input id="rpassword" class="input" type="password" minlength="6" required />
+          <div id="pwdStrength" class="note">Password strength: <span id="strengthVal">—</span></div>
+        </div>
+
+        <div class="form-row">
+          <label for="rconfirm" data-i18n="confirm_password">Confirm Password</label>
+          <input id="rconfirm" class="input" type="password" required />
+          <div id="confirmErr" class="error" style="display:none"></div>
+        </div>
+
+        <div class="form-row">
+          <button class="btn" type="submit">Create Account</button>
+        </div>
+
+        <div style="margin-top:10px"><small>By creating an account you agree to our terms.</small></div>
+      </form>
+    </div>
+  </main>
+
+  <script src="theme-i18n.js"></script>
+  <script>
+  (function(){
+    const form = document.getElementById('regForm');
+    const email = document.getElementById('remail');
+    const pwd = document.getElementById('rpassword');
+    const confirm = document.getElementById('rconfirm');
+    const remailErr = document.getElementById('remailErr');
+    const confirmErr = document.getElementById('confirmErr');
+    const strengthVal = document.getElementById('strengthVal');
+
+    function zxcvbnLite(s){
+      let score=0;
+      if(s.length>7) score++;
+      if(/[A-Z]/.test(s)) score++;
+      if(/[0-9]/.test(s)) score++;
+      if(/[^A-Za-z0-9]/.test(s)) score++;
+      return Math.min(score,4);
+    }
+    function strengthText(score){
+      return ['Very weak','Weak','Okay','Good','Strong'][score];
+    }
+
+    pwd.addEventListener('input', ()=> {
+      const sc = zxcvbnLite(pwd.value);
+      strengthVal.textContent = strengthText(sc);
+    });
+
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      let ok=true;
+      // email
+      if(!/^\S+@\S+\.\S+$/.test(email.value)){ remailErr.style.display='block'; remailErr.textContent='Enter a valid email'; ok=false; } else remailErr.style.display='none';
+      // confirm
+      if(pwd.value !== confirm.value){ confirmErr.style.display='block'; confirmErr.textContent='Passwords do not match'; ok=false; } else confirmErr.style.display='none';
+      if(!ok) return;
+      alert('Registration simulated — replace with backend call');
+      window.location.href = 'login.html';
+    });
+  })();
+  </script>
+</body>
+</html>

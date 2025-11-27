@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title data-i18n="title">SaaS Analytics</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="brand">SaaS<span>Lab</span></div>
+
+    <div class="controls">
+      <div class="kicker small">Beta • Demo</div>
+
+      <!-- language dropdown -->
+      <div class="lang-wrap" aria-label="Language selector">
+        <button class="lang-btn" aria-haspopup="true" aria-expanded="false">
+          <span>🌐</span> <span class="lang-label">English</span> <span style="opacity:.6">▾</span>
+        </button>
+        <div class="lang-select" role="menu" aria-hidden="true">
+          <div class="lang-item" data-lang="en">English</div>
+          <div class="lang-item" data-lang="hi">हिन्दी</div>
+          <div class="lang-item" data-lang="es">Español</div>
+        </div>
+      </div>
+
+      <button class="theme-toggle" title="Toggle theme">Theme</button>
+      <a href="login.html"><button class="btn">Login</button></a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-left" style="flex:1;">
+        <h1 data-i18n="title">SaaS Analytics</h1>
+        <p class="lead" data-i18n="hero_sub">Realtime dashboards, team insights and predictive analytics to grow revenue.</p>
+
+        <div style="margin-top:18px;">
+          <button class="btn" data-i18n="hero_cta">Get Started</button>
+          <button class="btn ghost" style="margin-left:10px">Watch Demo</button>
+        </div>
+
+        <div class="metrics">
+          <div class="metric card"><strong>75%</strong><div class="small" data-i18n="activation">Activation</div></div>
+          <div class="metric card"><strong>120K</strong><div class="small" data-i18n="users">Users</div></div>
+          <div class="metric card"><strong>4.8</strong><div class="small" data-i18n="rating">Rating</div></div>
+        </div>
+      </div>
+
+      <div style="flex:1">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <strong>Live Overview</strong>
+            <small class="small">Realtime</small>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="liveChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section">
+      <h3 data-i18n="features_title">Powerful features</h3>
+      <div class="grid">
+        <div class="feature card">
+          <strong>Realtime Charts</strong>
+          <p class="small">Line, bar, pie charts with streaming updates and annotations.</p>
+        </div>
+        <div class="feature card">
+          <strong>Pivot Reports</strong>
+          <p class="small">Quick pivot insights and CSV import for deeper analysis.</p>
+        </div>
+        <div class="feature card">
+          <strong>Team & Security</strong>
+          <p class="small">Role-based access, activity logs, SSO & audit trails.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pivot / Table -->
+    <section class="section">
+      <h3>Pivot & Reports</h3>
+      <div class="card">
+        <table class="table" id="pivot">
+          <thead><tr><th>Region</th><th>Revenue</th><th>Orders</th></tr></thead>
+          <tbody>
+            <tr><td>North America</td><td>$450,000</td><td>3,200</td></tr>
+            <tr><td>Europe</td><td>$320,000</td><td>2,200</td></tr>
+            <tr><td>APAC</td><td>$240,000</td><td>1,600</td></tr>
+            <tr><td>LatAm</td><td>$98,000</td><td>760</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="section">
+      <h3 data-i18n="pricing_title">Choose your plan</h3>
+      <div class="pricing">
+        <div class="plan card">
+          <h4>Starter</h4><p class="small">Basic analytics for teams</p><div style="margin:12px 0"><strong>$9 / mo</strong></div>
+          <button class="btn">Choose Starter</button>
+        </div>
+        <div class="plan card">
+          <h4>Pro</h4><p class="small">Advanced reports & API</p><div style="margin:12px 0"><strong>$29 / mo</strong></div>
+          <button class="btn">Choose Pro</button>
+        </div>
+        <div class="plan card">
+          <h4>Enterprise</h4><p class="small">Custom SLAs & Onboarding</p><div style="margin:12px 0"><strong>Contact</strong></div>
+          <button class="btn">Contact Sales</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials long body -->
+    <section class="section">
+      <h3>What customers say</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+        <div class="testimonial card"><strong>Acme Inc</strong><p class="small">"Helped our retention by 14% in 3 months."</p></div>
+        <div class="testimonial card"><strong>BetaCo</strong><p class="small">"API made our integration painless."</p></div>
+        <div class="testimonial card"><strong>Gamma Labs</strong><p class="small">"Real-time alerts saved us costly outages."</p></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="small">Built for teams — fast, private, and secure.</div>
+      <div class="small" data-i18n-footer>© 2025 SaaS Lab. All rights reserved.</div>
+    </footer>
+
+  </main>
+
+  <!-- libs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="theme-i18n.js"></script>
+
+  <script>
+  // Live chart
+  (function(){
+    const ctx = document.getElementById('liveChart').getContext('2d');
+    const labels = Array.from({length:12},(_,i)=>`${i+1}m`);
+    const data = { labels, datasets:[{ label:'Active', data:labels.map(()=>Math.floor(80 + Math.random()*120)), tension:0.35, fill:true, backgroundColor:'rgba(37,99,235,0.12)', borderColor:'rgba(37,99,235,1)'}]};
+    const cfg = { type:'line', data, options:{ responsive:true, plugins:{legend:{display:false}}}};
+    const chart = new Chart(ctx, cfg);
+    setInterval(()=>{ const d = chart.data.datasets[0].data; d.shift(); d.push(Math.floor(60 + Math.random()*160)); chart.update(); }, 2800);
+  })();
+  </script>
+</body>
+</html>

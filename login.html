@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="brand">SaaS<span>Lab</span></div>
+    <div class="controls">
+      <div class="lang-wrap">
+        <button class="lang-btn"><span>🌐</span> <span class="lang-label">English</span> ▾</button>
+        <div class="lang-select">
+          <div class="lang-item" data-lang="en">English</div>
+          <div class="lang-item" data-lang="hi">हिन्दी</div>
+          <div class="lang-item" data-lang="es">Español</div>
+        </div>
+      </div>
+      <button class="theme-toggle">Theme</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="form-card" role="main" aria-labelledby="login-title">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <strong>SaaS Lab</strong>
+        <div class="small">Welcome back</div>
+      </div>
+      <h2 id="login-title" data-i18n="login">Login</h2>
+
+      <form id="loginForm" novalidate>
+        <div class="form-row">
+          <label for="email" data-i18n="email">Email</label>
+          <input id="email" name="email" class="input" type="email" required />
+          <div id="emailError" class="error" aria-live="polite" style="display:none"></div>
+        </div>
+
+        <div class="form-row">
+          <label for="password" data-i18n="password">Password</label>
+          <div style="display:flex;gap:8px">
+            <input id="password" name="password" class="input" type="password" required minlength="6" />
+            <button type="button" id="togglePwd" class="btn ghost" style="padding:.5rem">Show</button>
+          </div>
+          <div id="pwdError" class="error" aria-live="polite" style="display:none"></div>
+        </div>
+
+        <div class="form-row">
+          <button class="btn" type="submit" aria-label="Login">Login</button>
+        </div>
+
+        <div class="form-row socials">
+          <div class="social">Google</div><div class="social">GitHub</div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;margin-top:12px">
+          <a href="register.html" data-i18n="register">Register</a>
+          <a href="forgot.html" data-i18n="forgot">Forgot Password?</a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script src="theme-i18n.js"></script>
+  <script>
+  // validation & handlers
+  (function(){
+    const form = document.getElementById('loginForm');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const emailErr = document.getElementById('emailError');
+    const pwdErr = document.getElementById('pwdError');
+    const togglePwd = document.getElementById('togglePwd');
+
+    function showError(el, msg){
+      el.textContent = msg; el.style.display = 'block';
+    }
+    function hideError(el){ el.textContent=''; el.style.display='none'; }
+
+    togglePwd.addEventListener('click', ()=> {
+      if(password.type === 'password'){ password.type = 'text'; togglePwd.textContent = 'Hide'; }
+      else { password.type='password'; togglePwd.textContent='Show'; }
+    });
+
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      let valid = true;
+      // email
+      if(!email.value || !/^\S+@\S+\.\S+$/.test(email.value)){
+        showError(emailErr, 'Please enter a valid email');
+        valid = false;
+      } else hideError(emailErr);
+      // password
+      if(!password.value || password.value.length < 6){
+        showError(pwdErr, 'Password must be at least 6 characters');
+        valid = false;
+      } else hideError(pwdErr);
+
+      if(!valid) return;
+      // simulate login success
+      alert('Login simulated — replace with API call');
+      window.location.href = 'landing.html';
+    });
+  })();
+  </script>
+</body>
+</html>

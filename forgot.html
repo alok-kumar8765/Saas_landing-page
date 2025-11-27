@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Forgot Password</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="brand">SaaS<span>Lab</span></div>
+    <div class="controls">
+      <div class="lang-wrap">
+        <button class="lang-btn"><span>🌐</span> <span class="lang-label">English</span> ▾</button>
+        <div class="lang-select">
+          <div class="lang-item" data-lang="en">English</div>
+          <div class="lang-item" data-lang="hi">हिन्दी</div>
+          <div class="lang-item" data-lang="es">Español</div>
+        </div>
+      </div>
+      <button class="theme-toggle">Theme</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="form-card">
+      <h2>Reset password</h2>
+      <form id="forgotForm">
+        <label for="femail" data-i18n="email">Email</label>
+        <input id="femail" class="input" type="email" required />
+        <div id="ferr" class="error" style="display:none"></div>
+        <div style="margin-top:12px">
+          <button class="btn" type="submit">Send reset link</button>
+        </div>
+        <div class="note">You will receive a link to reset your password if the email exists in our system.</div>
+      </form>
+    </div>
+  </main>
+
+  <script src="theme-i18n.js"></script>
+  <script>
+  (function(){
+    const form = document.getElementById('forgotForm');
+    const email = document.getElementById('femail');
+    const ferr = document.getElementById('ferr');
+    form.addEventListener('submit',(e)=>{
+      e.preventDefault();
+      if(!/^\S+@\S+\.\S+$/.test(email.value)){ ferr.style.display='block'; ferr.textContent='Please enter a valid email'; return; }
+      ferr.style.display='none';
+      alert('Reset link (simulated). In production send real email with token.');
+      window.location.href = 'login.html';
+    });
+  })();
+  </script>
+</body>
+</html>
